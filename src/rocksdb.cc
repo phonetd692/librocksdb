@@ -167,7 +167,12 @@ rocksdb__on_open (uv_work_t *handle) {
   options.create_missing_column_families = rocksdb__option<&rocksdb_options_t::create_missing_column_families, bool>(
     &req->options, 0
   );
-
+  options.delete_obsolete_files_period_micros = 60ULL * 1000000;
+  options.keep_log_file_num = 1;
+ 
+  options.max_log_file_size = 5242880;
+  
+  options.recycle_log_file_num = 1;
   options.max_background_jobs = rocksdb__option<&rocksdb_options_t::max_background_jobs, int>(
     &req->options, 0
   );
